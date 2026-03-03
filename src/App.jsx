@@ -19,8 +19,8 @@ function App() {
 
     if (numAllowed) str += "0123456789";
     if (charAllowed) str = str + "!#$%&'()*+,-./:;<=>?@[]^_`{|}~" + '"';
-    for (let i = 1; i <= len; i++) {
-      let char = Math.floor(Math.random() * str.length + 1);
+    for (let i = 0; i < len; i++) {
+      let char = Math.floor(Math.random() * str.length);
       p += str.charAt(char);
     }
     setPass(p);
@@ -57,7 +57,7 @@ function App() {
               className="cursor-pointer"
               id="length"
               onChange={(e) => {
-                setLen(e.target.value);
+                setLen(Number(e.target.value));
               }}
             />
             <label htmlFor="length">Length: {len}</label>
@@ -66,7 +66,7 @@ function App() {
           <div className="flex items-center gap-x-1">
             <input
               type="checkbox"
-              defaultChecked={numAllowed}
+              checked={numAllowed}
               id="num"
               onChange={() => {
                 setNumAllowed((prev) => !prev);
@@ -77,7 +77,7 @@ function App() {
           <div>
             <input
               type="checkbox"
-              defaultChecked={charAllowed}
+              checked={charAllowed}
               id="ch"
               onChange={() => {
                 setCharAllowed((prev) => !prev);
