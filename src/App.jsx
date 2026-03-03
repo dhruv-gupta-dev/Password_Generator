@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 function App() {
   const [len, setLen] = useState(8);
@@ -6,6 +6,13 @@ function App() {
   const [charAllowed, setCharAllowed] = useState(false);
   const [pass, setPass] = useState("");
 
+  const passRef = useRef(null)
+  const copyPassToClip = useCallback(()=>{
+    passRef.current?.select()
+    passRef.current?.setSelectionRange(0,100)
+    
+    window.navigator.clipboard.writeText(pass)
+  },[pass])
   const passGen = useCallback(() => {
     let p = "";
     let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -34,8 +41,9 @@ function App() {
             className="outline-none w-full py-1 px-3 bg-gray-300"
             placeholder="password"
             readOnly
+            ref = {passRef}
           />
-          <button className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0">
+          <button onClick={copyPassToClip} className="outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0">
             copy
           </button>
         </div>
